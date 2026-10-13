@@ -75,7 +75,7 @@ export const CONFIG = {
 
   site: {
     // Your live website address (no trailing slash). Used for SEO schema.
-    url: 'https://sunrise-engimach.netlify.app',
+    url: 'https://sunriseengimach.co.in',
   },
 };
 

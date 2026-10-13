@@ -58,13 +58,13 @@ The embedded map, the **Get Directions** button and the SEO data all update auto
 
 ### Update your domain in the page `<head>`
 
-Search engines and social apps read some tags before any JavaScript runs, so these hold the domain directly in each HTML file. Once your site is live, do a find-and-replace across all four `.html` files:
+Search engines and social apps read some tags before any JavaScript runs, so these hold the domain directly in each HTML file. The site is set up for `https://sunriseengimach.co.in`. If the domain ever changes, do a find-and-replace across all four `.html` files:
 
 ```
-https://sunrise-engimach.netlify.app   →   https://your-real-domain.com
+https://sunriseengimach.co.in   →   https://your-new-domain.com
 ```
 
-Then set the same value in `site.url` in `config.js`.
+Then set the same value in `site.url` in `config.js`, and update the `CNAME` file.
 
 ---
 
@@ -89,14 +89,24 @@ ES modules don't run from a double-clicked file (`file://`), so you need a small
 
 To update the site later, open your site in Netlify, go to **Deploys**, and drag the folder in again.
 
-### GitHub Pages
+### GitHub Pages (current live setup)
 
-1. Create a free account at <https://github.com> and click **New repository** (e.g. `sunrise-engimach`, Public).
-2. Click **uploading an existing file**, drag in all the files and folders, then click **Commit changes**.
-3. Go to **Settings → Pages**. Under **Build and deployment**, choose **Deploy from a branch**, set the branch to **main** and the folder to **/ (root)**, then **Save**.
-4. After a minute your site is live at `https://<your-username>.github.io/sunrise-engimach/`.
+The site is hosted on GitHub Pages from the `main` branch of
+<https://github.com/rajdeeprathod9636/sunrise-engimach>, at **https://sunriseengimach.co.in**.
 
-The site uses only relative links, so it works from a sub-folder like this too.
+To update the live site, commit your changes and run `git push`. GitHub republishes within a minute or two.
+
+The `CNAME` file holds the custom domain, so don't delete it. The empty `.nojekyll` file tells GitHub to serve the files as-is.
+
+DNS records at the domain registrar:
+
+| Type  | Host / Name | Value                         |
+|-------|-------------|-------------------------------|
+| A     | `@`         | `185.199.108.153`             |
+| A     | `@`         | `185.199.109.153`             |
+| A     | `@`         | `185.199.110.153`             |
+| A     | `@`         | `185.199.111.153`             |
+| CNAME | `www`       | `rajdeeprathod9636.github.io` |
 
 ### Vercel or any shared hosting
 
