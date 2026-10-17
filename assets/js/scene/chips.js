@@ -67,12 +67,13 @@ export class Chips {
    * @param {THREE.Material} material  shared chip material (DoubleSide metal)
    * @param {object} opts
    */
-  constructor(material, { flying = 600, pile = 900, pileArea, floorY, gravity = 60 } = {}) {
+  constructor(material, { flying = 600, pile = 900, pileArea, floorY, gravity = 60, bounds = null } = {}) {
     this.group = new THREE.Group();
     this.group.name = 'chips';
     this.geos = VARIANTS.map((v) => ribbonGeometry({ ...v, steps: v.turns > 3 ? 96 : 48 }));
     this.gravity = gravity;
     this.floorY = floorY;
+    this.bounds = bounds;
     const r = rng(99);
 
     // Flying chips: one InstancedMesh per variant
@@ -94,6 +95,7 @@ export class Chips {
         rot: new Float32Array(per * 4),
         spin: new Float32Array(per * 3),
         life: new Float32Array(per),
+        rest: new Uint8Array(per),
         scale: new Float32Array(per),
         cursor: 0,
       };
@@ -108,7 +110,7 @@ export class Chips {
     const e = new THREE.Euler();
     const p = new THREE.Vector3();
     const s = new THREE.Vector3();
-    this.pile = this.geos.map((geo, vi) => {
+    this.pile = pile <= 0 ? [] : this.geos.map((geo, vi) => {
       const m = new THREE.InstancedMesh(geo, material, perPile);
       const rr = rng(1000 + vi);
       for (let i = 0; i < perPile; i++) {
@@ -151,7 +153,7 @@ export class Chips {
    * @param {THREE.Vector3} flowDir chip flow direction off the rake face (world, unit)
    * @param {number} perSecond  spawn rate at full feed
    */
-  update(dt, rate, origin, flowDir, perSecond) {
+  update(dt, rate, origin, flowDir, perSecond, realDt = dt) {
     const R = this.rand;
     this.acc += rate * dt * perSecond;
     while (this.acc >= 1) {
@@ -169,31 +171,31 @@ export class Chips {
       f.spin[i * 3] = (R() - 0.5) * 30;
       f.spin[i * 3 + 1] = (R() - 0.5) * 30;
       f.spin[i * 3 + 2] = (R() - 0.5) * 30;
-      f.life[i] = 1.6 + R() * 0.8;
+      f.rest[i] = 0;
+      f.life[i] = 1.2 + R() * 0.6; // seconds of real time — never lingers on slow devices
       f.scale[i] = 0.75 + R() * 0.6;
       if (f.mesh.count <= i) f.mesh.count = i + 1;
     }
 
     const { m4, q, p, s, q2, v } = this.tmp;
     const g = this.gravity;
+    const B = this.bounds;
+    const lifeStep = Math.max(dt, realDt);
     for (const f of this.fly) {
       let any = false;
       for (let i = 0; i < f.mesh.count; i++) {
-        if (f.life[i] <= 0) {
-          continue;
-        }
+        if (f.life[i] <= 0) continue;
         any = true;
-        f.life[i] -= dt;
+        f.life[i] -= lifeStep;
         const j = i * 3;
         if (f.life[i] <= 0) {
           m4.makeScale(0, 0, 0);
           f.mesh.setMatrixAt(i, m4);
           continue;
         }
-        if (f.pos[j + 1] > this.floorY + 0.03) {
+        if (!f.rest[i]) {
           f.vel[j + 1] -= g * dt;
-          // light air drag
-          const drag = Math.exp(-dt * 0.6);
+          const drag = Math.exp(-dt * 0.6); // light air drag
           f.vel[j] *= drag;
           f.vel[j + 2] *= drag;
           f.pos[j] += f.vel[j] * dt;
@@ -206,9 +208,12 @@ export class Chips {
             q2.setFromAxisAngle(v.normalize(), ang);
             q.fromArray(f.rot, i * 4).premultiply(q2).toArray(f.rot, i * 4);
           }
-          if (f.pos[j + 1] <= this.floorY + 0.03) {
-            f.pos[j + 1] = this.floorY + 0.03;
-            f.life[i] = Math.min(f.life[i], 0.6); // rest briefly, then join the pile
+          if (B) this.collide(f, i, j);
+          if (f.pos[j + 1] <= this.floorY) {
+            // landed in the chip trough: settle and fade out quickly (the pile is drawn separately)
+            f.pos[j + 1] = this.floorY;
+            f.rest[i] = 1;
+            f.life[i] = Math.min(f.life[i], 0.35);
           }
         }
         const sc = f.scale[i] * Math.min(1, f.life[i] / 0.25);
@@ -223,10 +228,50 @@ export class Chips {
     }
   }
 
+  /** Keeps a flying chip inside the work zone: side walls, door glass, roof and the slant bed. */
+  collide(f, i, j) {
+    const B = this.bounds;
+    const pos = f.pos;
+    const vel = f.vel;
+    if (pos[j] < B.x0) {
+      pos[j] = B.x0;
+      vel[j] = Math.abs(vel[j]) * 0.3;
+    } else if (pos[j] > B.x1) {
+      pos[j] = B.x1;
+      vel[j] = -Math.abs(vel[j]) * 0.3;
+    }
+    if (pos[j + 2] > B.zFront) {
+      pos[j + 2] = B.zFront;
+      vel[j + 2] = -Math.abs(vel[j + 2]) * 0.25;
+      vel[j] *= 0.6;
+    }
+    if (pos[j + 1] > B.yTop) {
+      pos[j + 1] = B.yTop;
+      vel[j + 1] = -Math.abs(vel[j + 1]) * 0.3;
+    }
+    // slant bed / way covers: plane n·p = k (n points up-front, into the work zone)
+    const n = B.bedNormal;
+    const d = n.x * pos[j] + n.y * pos[j + 1] + n.z * pos[j + 2] - B.bedK;
+    if (d < 0.05) {
+      const push = 0.05 - d;
+      pos[j] += n.x * push;
+      pos[j + 1] += n.y * push;
+      pos[j + 2] += n.z * push;
+      const vn = n.x * vel[j] + n.y * vel[j + 1] + n.z * vel[j + 2];
+      if (vn < 0) {
+        // lose the bounce and slide down the slope into the trough
+        vel[j] -= 1.2 * vn * n.x;
+        vel[j + 1] -= 1.2 * vn * n.y;
+        vel[j + 2] -= 1.2 * vn * n.z;
+      }
+    }
+  }
+
   /** Removes all flying chips (e.g. after a big scroll jump). */
   clearFlying() {
     for (const f of this.fly) {
       f.life.fill(0);
+      f.rest.fill(0);
       f.mesh.count = 0;
     }
   }

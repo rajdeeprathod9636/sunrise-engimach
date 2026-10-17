@@ -34,7 +34,7 @@ export const ENCLOSURE = {
   floorY: -21,
 };
 export const DOOR_TRAVEL = 10.8;
-const BED_K = -2.83; // bed plane: TAN · p = BED_K
+export const BED_K = -2.83; // bed plane: TAN · p = BED_K
 
 function mesh(geo, mat, { cast = true, receive = true, name } = {}) {
   const m = new THREE.Mesh(geo, mat);
@@ -409,7 +409,7 @@ function buildShell(M, tier) {
     p.translate(I.x0 + 0.4 + i * ((I.x1 - I.x0 - 0.8) / 40), I.y0 + 0.18, 2.1);
     plates.push(p);
   }
-  const beltPlates = add(mesh(mergeGeometries(plates), M.groundSteel));
+  const beltPlates = add(mesh(mergeGeometries(plates), M.blackOxide)); // dark slats: a clean conveyor, not bright specks
 
   // --- tailstock (retracted) ---
   const tail = new THREE.Group();

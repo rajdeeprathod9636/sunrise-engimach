@@ -7,9 +7,9 @@ import { RectAreaLightUniformsLib } from 'three/addons/lights/RectAreaLightUnifo
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { createRenderer, preToneMapped, toneMappingMode, watchSize, aspectClass } from './renderer.js';
 import { createMaterials } from './materials.js';
-import { buildMachine, DIR, TAN, TOOL_REACH, ENCLOSURE, DOOR_TRAVEL } from './machine.js';
+import { buildMachine, DIR, TAN, TOOL_REACH, ENCLOSURE, DOOR_TRAVEL, BED_K } from './machine.js';
 import { buildFloor, buildBackground, buildInspection, BENCH } from './set.js';
-import { StoryWorkpiece, removedFraction, PART_CENTER, PART_L, X_FACE, finishedRadius } from './workpiece.js';
+import { StoryWorkpiece, PART_CENTER, PART_L, X_FACE, finishedRadius } from './workpiece.js';
 import { Chips } from './chips.js';
 import { Coolant } from './coolant.js';
 import { stateAt, partPose, toolTip, cameraKeys, sideAt, frameSphere, glassClearance } from './timeline.js';
@@ -82,9 +82,17 @@ export async function initStoryScene(canvas, opts = {}) {
 
   const chips = new Chips(M.chip, {
     flying: Math.round(560 * tier.chipScale),
-    pile: Math.round(900 * tier.chipScale),
+    pile: 0, // no persistent pile: chips fall into the conveyor and fade, nothing lingers on screen
     floorY: ENCLOSURE.inner.y0 + 0.25,
     pileArea: { x0: -2.2, x1: 4.2, z0: 1.3, z1: 3.3, y: ENCLOSURE.inner.y0 + 0.2 },
+    bounds: {
+      x0: ENCLOSURE.inner.x0 + 0.1,
+      x1: ENCLOSURE.inner.x1 - 0.1,
+      zFront: ENCLOSURE.inner.z1 - 0.15,
+      yTop: ENCLOSURE.inner.y1 - 0.3,
+      bedNormal: TAN,
+      bedK: BED_K,
+    },
   });
   scene.add(chips.group);
   const coolant = new Coolant(M.coolant, machine.turret.nozzleLocal, { mist: Math.round(320 * tier.mistScale) });
@@ -269,11 +277,11 @@ export async function initStoryScene(canvas, opts = {}) {
     M.setWet(s.wet);
 
     // chips: only while cutting AND the scroll is actually feeding the tool
-    const feeding = s.cutting ? clamp01(pSpeed / 0.3) * s.spindle : 0;
+    // chips only while cutting AND the scroll is feeding the tool forward (never when un-machining)
+    const feeding = s.cutting && pSpeed > 0 ? clamp01(pSpeed / 0.3) * s.spindle : 0;
     flow.copy(TAN).multiplyScalar(1.0).add(tmp.set(0.35, 0.55, 0.25)).normalize();
-    chips.update(dt, feeding, tip, flow, 240 * tier.chipScale);
-    chips.setPile(removedFraction(s));
-    if (!s.cutting && wasFeeding && Math.abs(pSpeed) > 6) chips.clearFlying();
+    chips.update(dt, feeding, tip, flow, 240 * tier.chipScale, realDt);
+    if (pSpeed < -0.05 || (!s.cutting && wasFeeding && Math.abs(pSpeed) > 6)) chips.clearFlying(); // scrolling back: no debris
     wasFeeding = s.cutting;
 
     // practical amber glint at the insert while cutting
@@ -501,8 +509,10 @@ export async function initStoryScene(canvas, opts = {}) {
   let last = performance.now();
   const fixedDt = 1 / 30;
 
+  let realDt = 1 / 60;
   function frame(now) {
-    const dt = Math.min(0.05, Math.max(0.0001, (now - last) / 1000));
+    realDt = Math.min(1, Math.max(0.0001, (now - last) / 1000));
+    const dt = Math.min(0.05, realDt);
     last = now;
     step(dt);
     adaptive.sample(dt, now);
@@ -514,7 +524,7 @@ export async function initStoryScene(canvas, opts = {}) {
     const prev = P;
     P = record ? targetP : Math.abs(targetP - P) < 1e-4 ? targetP : P + (targetP - P) * dampK(8, dt);
     const t0 = stats ? performance.now() : 0;
-    const s = apply(dt, Math.abs(P - prev) / dt);
+    const s = apply(dt, (P - prev) / dt);
     animateBenchCaliper(s);
     const t1 = stats ? performance.now() : 0;
     post.render(dt);
