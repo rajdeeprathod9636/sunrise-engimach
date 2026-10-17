@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>OG image template</title>
+<!-- Rendered to assets/img/og-image.png by: node tools/render.mjs og (after "parts") -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@500;600;700&amp;display=block">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #0E1013; }
+  body {
+    position: relative;
+    font-family: Inter, system-ui, sans-serif;
+    color: #E9E6E0;
+    background:
+      radial-gradient(ellipse 55% 70% at 74% 55%, rgba(38, 43, 50, 0.85), transparent 70%),
+      #0E1013;
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(184,190,198,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(184,190,198,.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 80% at 45% 45%, #000 30%, transparent 100%);
+  }
+  .brand { position: absolute; left: 72px; top: 64px; display: flex; align-items: center; gap: 16px; }
+  .brand svg { width: 64px; height: 64px; }
+  .brand b { display: block; font: 700 27px/1 "Space Grotesk"; letter-spacing: .08em; }
+  .brand small { display: block; margin-top: 8px; font: 400 13px/1 "Space Grotesk"; letter-spacing: .42em; color: #B8BEC6; }
+  h1 { position: absolute; left: 70px; top: 190px; margin: 0; font: 600 104px/0.98 "Space Grotesk"; letter-spacing: -0.035em; }
+  p { position: absolute; left: 73px; top: 402px; margin: 0; font: 400 25px/1.4 Inter; color: #B8BEC6; }
+  .place { position: absolute; left: 73px; top: 458px; font: 500 15px/1 "Space Grotesk"; letter-spacing: .28em; color: #C8873E; }
+  .part { position: absolute; right: -10px; top: 175px; width: 640px; height: auto; }
+  .floor { position: absolute; left: 640px; top: 520px; width: 520px; height: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.65), transparent); }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="brand">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="#B8BEC6"><g transform="translate(32 40)"><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(-67.5)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(-45)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(-22.5)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(0)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(22.5)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(45)"/><rect x="-2.6" y="-25.5" width="5.2" height="7.5" rx="1" transform="rotate(67.5)"/></g><path d="M13 40a19 19 0 0 1 38 0h-5a14 14 0 0 0-28 0z"/><rect x="4" y="42.5" width="56" height="3" rx="1.5"/><rect x="16" y="49" width="32" height="2" rx="1" opacity=".55"/></g><path d="M22 40a10 10 0 0 1 20 0z" fill="#C8873E"/></svg>
+    <div><b>SUNRISE</b><small>ENGIMACH</small></div>
+  </div>
+  <h1>Precision,<br>turned.</h1>
+  <p>CNC turning in steel &amp; stainless steel.</p>
+  <div class="place">RAJKOT · GUJARAT · INDIA</div>
+  <div class="floor"></div>
+  <img class="part" src="out/parts/part-showcase@3x.png" alt="">
+</body>
+</html>

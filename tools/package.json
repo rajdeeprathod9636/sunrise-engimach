@@ -1,0 +1,17 @@
+{
+  "name": "sunrise-engimach-render-tools",
+  "private": true,
+  "type": "module",
+  "description": "Offline render/convert/encode tools for the Sunrise Engimach site (not needed to host the site).",
+  "scripts": {
+    "serve": "node serve.mjs",
+    "render": "node render.mjs all",
+    "convert": "node convert-images.mjs",
+    "encode": "node encode-videos.mjs"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "5.3.0",
+    "puppeteer-core": "23.11.1",
+    "sharp": "0.33.5"
+  }
+}

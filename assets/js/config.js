@@ -21,23 +21,39 @@ export const CONFIG = {
   },
 
   contact: {
-    phoneDisplay: '+91 79906 36261', // shown on the site
-    phoneTel: '+917990636261', // used for click-to-call
-    whatsappNumber: '917990636261', // international format, no "+" or spaces
+    // Click-to-call numbers, in display order. The first one is the primary number.
+    phones: [
+      { label: 'Mobile', display: '+91 95106 54646', tel: '+919510654646' },
+      { label: 'Mobile', display: '+91 63544 90629', tel: '+916354490629' },
+    ],
+    // Receives quote-form enquiries, the floating button and every "WhatsApp" button.
+    // International format, digits only — no "+" or spaces.
+    whatsappNumber: '919510654646',
     whatsappGreeting: "Hi, I'd like to enquire about CNC turning work.",
   },
 
   location: {
-    // Full postal address — edit this one line.
-    address: '[Plot No. ___, ___ Industrial Area, Rajkot, Gujarat – 360___]',
+    // Postal address as shown on the site — one entry per line.
+    addressLines: [
+      'Survey No. 29, Plot No. 23, Tecno Cast,',
+      'Beside DK, Near Raj Cooling System,',
+      'Vavdi, Rajkot, Gujarat – 360004, India',
+    ],
+    // The same address split up for search engines (SEO schema).
+    streetAddress: 'Survey No. 29, Plot No. 23, Tecno Cast, Beside DK, Near Raj Cooling System',
+    locality: 'Vavdi, Rajkot',
     city: 'Rajkot',
     region: 'Gujarat',
+    postalCode: '360004',
     country: 'India',
     countryCode: 'IN',
+    // Used by the map and Get Directions while lat/lng are empty.
+    mapQuery: 'Tecno Cast, Vavdi, Rajkot 360004',
     // Exact pin location (Google Maps → right-click your unit → click the coordinates to copy).
-    lat: 22.3039,
-    lng: 70.8022,
-    mapZoom: 15,
+    // Leave as null to use mapQuery instead; fill both in to switch the map to the exact pin.
+    lat: null,
+    lng: null,
+    mapZoom: 16,
   },
 
   // Machine & capability values shown on the Services page.
@@ -79,9 +95,15 @@ export const CONFIG = {
   },
 };
 
-/* Shorthand exports for the map coordinates. */
+/* Shorthand exports for the map coordinates (null until filled in). */
 export const LAT = CONFIG.location.lat;
 export const LNG = CONFIG.location.lng;
+
+/** True when both coordinates are real numbers. */
+export const HAS_COORDS = Number.isFinite(LAT) && Number.isFinite(LNG);
+
+/** Phone entries in display order (always an array). */
+export const PHONES = (CONFIG.contact.phones || []).filter((p) => p && p.tel);
 
 /** True when a value is still an unfilled "[___]" placeholder. */
 export function isPlaceholder(value) {
@@ -94,19 +116,28 @@ export function display(value, fallback = 'On request') {
   return String(value);
 }
 
-/** Address text for display. Falls back to the city line until the real address is filled in. */
-export function addressText() {
-  const { address, city, region, country } = CONFIG.location;
-  return isPlaceholder(address) || !address ? `${city}, ${region}, ${country}` : address;
+/** Address lines for display. Falls back to the city line until a real address is filled in. */
+export function addressLines() {
+  const { addressLines: lines, city, region, country } = CONFIG.location;
+  const real = (lines || []).filter((l) => l && !isPlaceholder(l));
+  return real.length ? real : [`${city}, ${region}, ${country}`];
 }
 
-const coords = `${LAT},${LNG}`;
+/** Address as one line of text (used where line breaks don't fit). */
+export function addressText() {
+  return addressLines()
+    .map((l) => l.replace(/,\s*$/, ''))
+    .join(', ');
+}
+
+// Exact pin when coordinates are filled in, otherwise a search for the address.
+const place = HAS_COORDS ? `${LAT},${LNG}` : encodeURIComponent(CONFIG.location.mapQuery);
 
 export const LINKS = {
-  tel: `tel:${CONFIG.contact.phoneTel}`,
+  tel: (i = 0) => (PHONES[i] ? `tel:${PHONES[i].tel}` : ''),
   whatsapp: (text = CONFIG.contact.whatsappGreeting) =>
     `https://wa.me/${CONFIG.contact.whatsappNumber}?text=${encodeURIComponent(text)}`,
-  directions: `https://www.google.com/maps/dir/?api=1&destination=${coords}`,
-  mapView: `https://www.google.com/maps?q=${coords}`,
-  mapEmbed: `https://www.google.com/maps?q=${coords}&z=${CONFIG.location.mapZoom}&output=embed`,
+  directions: `https://www.google.com/maps/dir/?api=1&destination=${place}`,
+  mapView: `https://www.google.com/maps?q=${place}`,
+  mapEmbed: `https://www.google.com/maps?q=${place}&z=${CONFIG.location.mapZoom}&output=embed`,
 };

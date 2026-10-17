@@ -33,6 +33,18 @@
   <link rel="stylesheet" href="assets/css/style.css">
 
   <script>document.documentElement.classList.add('js');</script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+        "postprocessing": "https://cdn.jsdelivr.net/npm/postprocessing@6.37.8/build/index.min.js",
+        "n8ao": "https://cdn.jsdelivr.net/npm/n8ao@1.10.1/dist/N8AO.min.js",
+        "detect-gpu": "https://cdn.jsdelivr.net/npm/detect-gpu@5.0.70/dist/detect-gpu.esm.js"
+      }
+    }
+  </script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
@@ -57,6 +69,7 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
+      <a class="nav__phone" href="tel:+919510654646" data-href="tel1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span data-cfg="phone1">+91 95106 54646</span></a>
       <a class="btn btn--primary btn--sm nav__cta" href="contact.html#quote">Get a Quote</a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu" data-menu-toggle>
         <span></span><span></span>
@@ -74,8 +87,8 @@
       </ol>
       <div class="mobile-menu__foot">
         <a class="btn btn--primary btn--block" href="contact.html#quote">Get a Quote <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn--wa btn--block" href="https://wa.me/917990636261?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg> WhatsApp us</a>
-        <p class="mobile-menu__meta"><a href="tel:+917990636261" data-href="tel" data-cfg="phone">+91 79906 36261</a> · <span data-cfg="city">Rajkot, Gujarat, India</span></p>
+        <a class="btn btn--wa btn--block" href="https://wa.me/919510654646?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg> WhatsApp us</a>
+        <p class="mobile-menu__meta"><span class="mobile-menu__phones"><a href="tel:+919510654646" data-href="tel1" data-cfg="phone1">+91 95106 54646</a><span data-phone-slot="2"> · <a href="tel:+916354490629" data-href="tel2" data-cfg="phone2">+91 63544 90629</a></span></span><span data-cfg="city">Rajkot, Gujarat, India</span></p>
       </div>
     </nav>
   </div>
@@ -215,46 +228,47 @@
         </div>
         <div class="parts-grid" data-reveal-group>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M10 28H30V24H70V28H100V32H150V48H100V52H70V56H30V52H10Z"/><path d="M30 28V52M70 28V52M100 32V48"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-shaft-320.avif 1x, assets/img/renders/part-shaft-640.avif 2x, assets/img/renders/part-shaft-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-shaft-320.webp 1x, assets/img/renders/part-shaft-640.webp 2x, assets/img/renders/part-shaft-960.webp 3x"><img src="assets/img/renders/part-shaft-640.webp" alt="Render of a stepped, grooved and threaded steel shaft" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Shafts</h3>
             <p>Stepped, grooved and threaded shafts</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M20 26H32V33H136L140 37V43L136 47H32V54H20Z"/><path d="M32 33V47"/><circle cx="126" cy="40" r="2.5"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-pin-320.avif 1x, assets/img/renders/part-pin-640.avif 2x, assets/img/renders/part-pin-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-pin-320.webp 1x, assets/img/renders/part-pin-640.webp 2x, assets/img/renders/part-pin-960.webp 3x"><img src="assets/img/renders/part-pin-640.webp" alt="Render of a turned steel pin with head and circlip groove" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Pins</h3>
             <p>Clevis, dowel and hinge pins</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M24 16H34V22H130V58H34V64H24Z"/><path d="M24 32H130M24 48H130" stroke-dasharray="4 3"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-bush-320.avif 1x, assets/img/renders/part-bush-640.avif 2x, assets/img/renders/part-bush-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-bush-320.webp 1x, assets/img/renders/part-bush-640.webp 2x, assets/img/renders/part-bush-960.webp 3x"><img src="assets/img/renders/part-bush-640.webp" alt="Render of a flanged steel bush" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Bushes</h3>
             <p>Plain and flanged bushes</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><circle cx="62" cy="40" r="26"/><circle cx="62" cy="40" r="12"/><path d="M104 14H124V66H104Z"/><path d="M104 28H124M104 52H124" stroke-dasharray="4 3"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-spacer-320.avif 1x, assets/img/renders/part-spacer-640.avif 2x, assets/img/renders/part-spacer-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-spacer-320.webp 1x, assets/img/renders/part-spacer-640.webp 2x, assets/img/renders/part-spacer-960.webp 3x"><img src="assets/img/renders/part-spacer-640.webp" alt="Render of a turned steel spacer" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Spacers</h3>
             <p>Precise lengths and bores</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M22 22H138V58H22Z"/><path d="M22 32H138M22 48H138" stroke-dasharray="4 3"/><path d="M80 22V58"/><path d="M46 22V16H54V22M106 22V16H114V22"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-coupling-320.avif 1x, assets/img/renders/part-coupling-640.avif 2x, assets/img/renders/part-coupling-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-coupling-320.webp 1x, assets/img/renders/part-coupling-640.webp 2x, assets/img/renders/part-coupling-960.webp 3x"><img src="assets/img/renders/part-coupling-640.webp" alt="Render of a steel sleeve coupling" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Couplings</h3>
             <p>Sleeve and shaft couplings</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><circle cx="80" cy="40" r="32"/><circle cx="80" cy="40" r="11"/><circle cx="80" cy="40" r="21" stroke-dasharray="3 3"/><circle cx="80" cy="19" r="3"/><circle cx="80" cy="61" r="3"/><circle cx="59" cy="40" r="3"/><circle cx="101" cy="40" r="3"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-flange-320.avif 1x, assets/img/renders/part-flange-640.avif 2x, assets/img/renders/part-flange-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-flange-320.webp 1x, assets/img/renders/part-flange-640.webp 2x, assets/img/renders/part-flange-960.webp 3x"><img src="assets/img/renders/part-flange-640.webp" alt="Render of a turned flange with bolt holes" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Flanges</h3>
             <p>Turned flanges with bores</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M18 32H50V48H18Z"/><path d="M50 22H96V58H50Z"/><path d="M50 31H96M50 49H96"/><path d="M96 32H142V48H96"/><path d="M22 32l3 16M28 32l3 16M34 32l3 16M40 32l3 16M106 32l3 16M112 32l3 16M118 32l3 16M124 32l3 16M130 32l3 16"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-fitting-320.avif 1x, assets/img/renders/part-fitting-640.avif 2x, assets/img/renders/part-fitting-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-fitting-320.webp 1x, assets/img/renders/part-fitting-640.webp 2x, assets/img/renders/part-fitting-960.webp 3x"><img src="assets/img/renders/part-fitting-640.webp" alt="Render of a hydraulic fitting with hex and threaded ends" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Fittings</h3>
             <p>Hydraulic and pneumatic fittings</p>
           </article>
           <article class="part">
-            <div class="part__art"><svg viewBox="0 0 160 80" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 40H156" stroke="#C8873E" stroke-dasharray="6 4" stroke-width="1" opacity=".6"/><path d="M14 33H146V47H14Z"/><path d="M18 33l3 14M24 33l3 14M30 33l3 14M36 33l3 14M42 33l3 14M48 33l3 14M106 33l3 14M112 33l3 14M118 33l3 14M124 33l3 14M130 33l3 14M136 33l3 14"/></svg></div>
+            <div class="part__art"><picture><source type="image/avif" srcset="assets/img/renders/part-threaded-320.avif 1x, assets/img/renders/part-threaded-640.avif 2x, assets/img/renders/part-threaded-960.avif 3x"><source type="image/webp" srcset="assets/img/renders/part-threaded-320.webp 1x, assets/img/renders/part-threaded-640.webp 2x, assets/img/renders/part-threaded-960.webp 3x"><img src="assets/img/renders/part-threaded-640.webp" alt="Render of a double-ended threaded stud" width="320" height="150" decoding="async" loading="lazy"></picture></div>
             <h3>Threaded components</h3>
             <p>Studs, bolts and threaded rods</p>
           </article>
         </div>
+        <p class="parts-note">Illustrative 3D renders of typical part types — every job is made to your drawing.</p>
       </div>
     </section>
 
@@ -267,7 +281,7 @@
           </div>
           <div class="btn-row">
             <a class="btn btn--primary btn--lg" href="contact.html#quote">Get a Quote <svg class="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            <a class="btn btn--wa btn--lg" href="https://wa.me/917990636261?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg> WhatsApp</a>
+            <a class="btn btn--wa btn--lg" href="https://wa.me/919510654646?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg> WhatsApp</a>
           </div>
         </div>
       </div>
@@ -298,10 +312,13 @@
         <div>
           <h2 class="footer-title">Reach us</h2>
           <ul class="footer-links">
-            <li><address data-cfg="address">Rajkot, Gujarat, India</address></li>
-            <li><a href="tel:+917990636261" data-href="tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span data-cfg="phone">+91 79906 36261</span></a></li>
-            <li><a href="https://wa.me/917990636261?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg>WhatsApp</a></li>
-            <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=22.3039,70.8022" data-href="directions" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Get directions</a></li>
+            <li><address data-cfg="address">Survey No. 29, Plot No. 23, Tecno Cast,
+Beside DK, Near Raj Cooling System,
+Vavdi, Rajkot, Gujarat – 360004, India</address></li>
+            <li><a href="tel:+919510654646" data-href="tel1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span data-cfg="phone1">+91 95106 54646</span></a></li>
+            <li data-phone-slot="2"><a href="tel:+916354490629" data-href="tel2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><span data-cfg="phone2">+91 63544 90629</span></a></li>
+            <li><a href="https://wa.me/919510654646?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg>WhatsApp</a></li>
+            <li><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Tecno%20Cast%2C%20Vavdi%2C%20Rajkot%20360004" data-href="directions" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>Get directions</a></li>
           </ul>
         </div>
 
@@ -313,12 +330,13 @@
 
       <div class="footer-bottom">
         <p>© <span data-cfg="year">2026</span> Sunrise Engimach. All rights reserved.</p>
+        <p class="footer-credit">Illustrative 3D renders · HDRI by <a href="https://polyhaven.com/a/autoshop_01" target="_blank" rel="noopener">Poly Haven</a> (CC0) · <a href="CREDITS.md">Credits</a></p>
         <p>Rajkot, Gujarat, India</p>
       </div>
     </div>
   </footer>
 
-  <a class="wa-float" href="https://wa.me/917990636261?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener" aria-label="Chat with Sunrise Engimach on WhatsApp">
+  <a class="wa-float" href="https://wa.me/919510654646?text=Hi%2C%20I'd%20like%20to%20enquire%20about%20CNC%20turning%20work." data-href="whatsapp" target="_blank" rel="noopener" aria-label="Chat with Sunrise Engimach on WhatsApp">
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z"/></svg>
     <span class="wa-float__tip" aria-hidden="true">Chat on WhatsApp</span>
   </a>
