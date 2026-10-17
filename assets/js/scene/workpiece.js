@@ -450,13 +450,19 @@ export class StoryWorkpiece {
     // Fixed bounds (the buffers are preallocated, so computing them would include unused space)
     this.mesh.geometry.boundingBox = new THREE.Box3(new THREE.Vector3(PART_L, -R0, -R0), new THREE.Vector3(X_RAW, R0, R0));
     this.mesh.geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3((PART_L + X_RAW) / 2, 0, 0), (X_RAW - PART_L) / 2 + 0.1);
+    // Build the most complex state once so the buffers are allocated up front
+    // (no reallocation hitch when the thread first appears mid-scroll).
+    this.turned.build(storyProfile(FINAL_STATE));
   }
 
   update(s) {
-    const key = [s.face, s.cutX, s.cut, s.g1, s.g2, s.thread, s.finish].map((v) => v.toFixed(4)).join('|');
+    // Quantised so the mesh is only rebuilt when the change is visible: the helical thread is
+    // the expensive part, and 1 % of its 1.4 mm depth (14 µm) is far below what the eye can see.
+    const q = { ...s, thread: Math.round(s.thread * 100) / 100 };
+    const key = [q.face, q.cutX, q.cut, q.g1, q.g2, q.thread, q.finish].map((v) => v.toFixed(4)).join('|');
     if (key === this.key) return false;
     this.key = key;
-    this.turned.build(storyProfile(s));
+    this.turned.build(storyProfile(q));
     return true;
   }
 

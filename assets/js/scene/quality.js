@@ -172,7 +172,7 @@ export class AdaptiveResolution {
     // At the lowest scale and still too slow for ~3 s: ask for fewer features.
     if (this.level === this.steps.length - 1 && this.floorFps && this.onFloor) {
       this.floorWindows = fps < this.floorFps ? this.floorWindows + 1 : 0;
-      if (this.floorWindows >= 6) {
+      if (this.floorWindows >= 4) {
         this.floorWindows = 0;
         this.warmup = 30;
         this.onFloor(fps);

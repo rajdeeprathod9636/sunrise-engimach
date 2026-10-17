@@ -230,18 +230,23 @@ function initMenu() {
    Smooth scroll (Lenis) + GSAP
    ========================================================================== */
 function initSmoothScroll() {
-  if (reduceMotion || typeof window.Lenis === 'undefined' || params.has('nolenis')) return null;
-  const instance = new window.Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1 });
-  if (hasGsap) {
-    instance.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((t) => instance.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  } else {
-    const raf = (t) => {
-      instance.raf(t);
+  // The home page uses native scrolling: the browser scrolls on its own thread, so the page
+  // stays perfectly smooth even while the 3D scene is busy (the 3D smooths its own motion).
+  const useLenis = !reduceMotion && typeof window.Lenis !== 'undefined' && page !== 'home' && !params.has('nolenis');
+  let instance = null;
+  if (useLenis) {
+    instance = new window.Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 1 });
+    if (hasGsap) {
+      instance.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((t) => instance.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = (t) => {
+        instance.raf(t);
+        requestAnimationFrame(raf);
+      };
       requestAnimationFrame(raf);
-    };
-    requestAnimationFrame(raf);
+    }
   }
 
   $$('a[data-scroll]').forEach((a) => {
@@ -250,7 +255,8 @@ function initSmoothScroll() {
       const target = id && id.startsWith('#') ? $(id) : null;
       if (!target) return;
       e.preventDefault();
-      instance.scrollTo(target, { offset: 0, duration: 1.6 });
+      if (instance) instance.scrollTo(target, { offset: 0, duration: 1.6 });
+      else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     });
   });
   return instance;

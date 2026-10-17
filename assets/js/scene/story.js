@@ -135,19 +135,26 @@ export async function initStoryScene(canvas, opts = {}) {
   let activeTier = { ...tier };
   let post = createPost(renderer, scene, camera, activeTier, { toneMapping: tm, width, height });
 
-  // Fallback ladder when even the lowest render scale is too slow:
-  //   high → drop MSAA, depth of field and film grain, AO at half resolution → then tell the page.
-  let degradeLevel = 0;
-  function degrade() {
-    if (activeTier.name === 'high' && degradeLevel === 0) {
-      degradeLevel = 1;
-      activeTier = { ...activeTier, msaa: 0, dof: false, grain: false, ao: 'half' };
+  // Smoothness ladder: when even the lowest render scale stays below the frame-rate target,
+  // shed the most expensive effects one at a time. Only if the scene still cannot hold
+  // ~26 fps with everything shed does the page switch to the pre-rendered video.
+  const LADDER = [
+    (t) => (t.msaa || t.dof || t.grain ? { ...t, msaa: 0, dof: false, grain: false } : null),
+    (t) => (t.ao === 'full' ? { ...t, ao: 'half' } : null),
+    (t) => (t.ao ? { ...t, ao: null } : null),
+    (t) => (t.bloom ? { ...t, bloom: false } : null),
+  ];
+  function degrade(fps) {
+    for (const stepFn of LADDER) {
+      const next = stepFn(activeTier);
+      if (!next) continue;
+      activeTier = next;
       post.dispose();
       post = createPost(renderer, scene, camera, activeTier, { toneMapping: tm, width, height });
       applySize();
       return;
     }
-    if (opts.onTooSlow) opts.onTooSlow();
+    if (fps < 26 && opts.onTooSlow) opts.onTooSlow();
   }
 
   const maxDpr = record ? 1 : tier.maxDpr;
@@ -155,7 +162,7 @@ export async function initStoryScene(canvas, opts = {}) {
     max: maxDpr,
     min: tier.minDpr,
     onChange: (scale) => applySize(scale),
-    floorFps: record ? 0 : tier.minFps,
+    floorFps: record ? 0 : 50,
     onFloor: degrade,
   });
 
@@ -486,6 +493,7 @@ export async function initStoryScene(canvas, opts = {}) {
   let onScreen = true;
   let disposed = false;
   let ready = false; // no rendering until shaders are compiled (async, non-blocking)
+  const stats = new URLSearchParams(location.search).has('debug') ? [] : null; // per-frame [apply ms, render ms, dt ms, P]
   let last = performance.now();
   const fixedDt = 1 / 30;
 
@@ -501,9 +509,15 @@ export async function initStoryScene(canvas, opts = {}) {
     if (introT >= 0) introT += dt;
     const prev = P;
     P = record ? targetP : Math.abs(targetP - P) < 1e-4 ? targetP : P + (targetP - P) * dampK(8, dt);
+    const t0 = stats ? performance.now() : 0;
     const s = apply(dt, Math.abs(P - prev) / dt);
     animateBenchCaliper(s);
+    const t1 = stats ? performance.now() : 0;
     post.render(dt);
+    if (stats) {
+      stats.push([+(t1 - t0).toFixed(2), +(performance.now() - t1).toFixed(2), +(dt * 1000).toFixed(1), +P.toFixed(3)]);
+      if (stats.length > 2000) stats.shift();
+    }
     return s;
   }
 
@@ -621,6 +635,9 @@ export async function initStoryScene(canvas, opts = {}) {
     },
     resize() {
       sizeWatch.flush();
+    },
+    getStats() {
+      return stats;
     },
     getCallouts() {
       return projectCallouts(1);
