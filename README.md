@@ -182,7 +182,7 @@ ASSETS.md             assets guide · CREDITS.md licences
 
 ## 8. How things work (for whoever maintains the site)
 
-- **One progress value:** each story section has a ScrollTrigger; together they give P from 0 to 6, and `scene/timeline.js` derives everything from it — door, spindle speed, turret index angle, tool path, the bar's profile, coolant, wet sheen, part transfer, caliper, studio lights and camera. The chip pile is also derived from P, so scrolling back un-machines the part exactly.
+- **One progress value:** each story section has a ScrollTrigger; together they give P from 0 to 6, and `scene/timeline.js` derives everything from it — door, spindle speed, turret index angle, tool path, the bar's profile, coolant, wet sheen, part transfer, caliper, studio lights and camera. Scrolling back un-machines the part exactly. Chips are thrown only while the scroll feeds the tool forward; they bounce off the enclosure, fall into the conveyor and fade within about 1.5 s of real time, so no debris ever lingers on screen.
 - **Camera framing:** every keyframe frames a sphere that contains the whole workpiece, sized to the free area beside (landscape) or above (portrait) the text card. The page measures the cards and tells the scene where they are, so the part is never under a card.
 - **Text stays HTML** (always sharp); the inspection dimension callouts are an SVG overlay projected from 3D points every frame.
 - **Loader:** shows real progress (HDRI bytes, build, shader compile). Shaders compile asynchronously so the page stays responsive; the loader always disappears within about 2 seconds.
