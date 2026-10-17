@@ -7,7 +7,7 @@ A static, ready-to-deploy website for **Sunrise Engimach**, a CNC turning unit i
 - **Services** (`services.html`): operations, materials, machine capability cards, typical parts (photoreal renders).
 - **Contact** (`contact.html`): quote form that opens a pre-filled WhatsApp message, both phone numbers, the address, a map and Get Directions.
 
-Libraries load from CDNs with pinned versions: three.js 0.169.0, postprocessing 6.37.8, N8AO 1.10.1, detect-gpu 5.0.70 (jsDelivr), GSAP 3.12.5 + ScrollTrigger (cdnjs), Lenis 1.1.13 (unpkg), Google Fonts (Space Grotesk + Inter). See [CREDITS.md](CREDITS.md).
+Libraries load from CDNs with pinned versions: three.js 0.169.0, postprocessing 6.37.8, N8AO 1.10.1, detect-gpu 5.0.70 (jsDelivr), GSAP 3.12.5 + ScrollTrigger (cdnjs), Lenis 1.1.13 (unpkg; inner pages only), Google Fonts (Space Grotesk + Inter). See [CREDITS.md](CREDITS.md).
 
 ---
 
@@ -69,7 +69,8 @@ Search engines and social apps read some tags before any JavaScript runs, so the
 At run time the scene watches its own frame rate:
 
 - **Adaptive resolution** steps the render scale down (2 → 1.75 → 1.5 → 1.25 → 1) when it drops below ~50 fps and back up when there is headroom. It never goes below 1.0 on desktop.
-- If even the lowest scale is too slow, **High** drops MSAA, depth of field and grain and halves AO; if **Medium** still can't hold ~30 fps, the page switches to the video.
+- If even the lowest scale stays below ~50 fps, the scene sheds effects one at a time — MSAA, depth of field and grain first, then ambient occlusion, then bloom — so it stays fluid. Only if it still can't hold ~26 fps for several seconds does the page switch to the video.
+- The home page uses **native scrolling** (no smooth-scroll library): the browser scrolls on its own thread, so the text never stutters even while the 3D is busy; the 3D animation smooths its own motion. The other pages keep Lenis smooth scrolling.
 - Rendering pauses when the tab is hidden or the story has scrolled away.
 
 For testing, force a tier with `?tier=high`, `?tier=medium`, `?tier=low` or `?tier=static` (add `&ao=0&dof=0&msaa=0&bloom=0&smaa=0` to switch single effects off). `?aniso=circ` streaks the steel highlights around the circumference instead of across the lay; `?tm=neutral` uses Neutral tone mapping instead of AgX.

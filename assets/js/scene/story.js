@@ -154,8 +154,12 @@ export async function initStoryScene(canvas, opts = {}) {
       applySize();
       return;
     }
-    if (fps < 26 && opts.onTooSlow) opts.onTooSlow();
+    // Everything already shed: hand over to the video only if it stays this slow for a while
+    // (two consecutive checks, ~4 s) — a single hitch must never swap the experience.
+    slowChecks = fps < 26 ? slowChecks + 1 : 0;
+    if (slowChecks >= 2 && opts.onTooSlow) opts.onTooSlow();
   }
+  let slowChecks = 0;
 
   const maxDpr = record ? 1 : tier.maxDpr;
   const adaptive = new AdaptiveResolution({
